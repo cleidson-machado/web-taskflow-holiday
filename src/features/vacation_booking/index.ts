@@ -9,3 +9,6 @@ export { BookingModel } from "./bookingModel";
 
 // ViewModels
 export { useBookingViewModel } from "./useBookingViewModel";
+
+// Components
+export { BookingListComponent } from "./BookingListComponent";

@@ -1,17 +1,14 @@
 import React from "react";
 import type { NextPage } from "next";
 import Layout from "@/src/components/Layout";
+import { BookingListComponent } from "@/src/features/vacation_booking";
 
 /**
- * Página principal do Board, acessível pela rota /board.
- * O conteúdo é envolvido pelo Layout, permitindo que apenas esta área role.
+ * Página principal do Board, acessível pela rota /home.
+ * Exibe a lista real dos pedidos de férias utilizando o endpoint http://localhost:8080/bookings
  */
-const HomePage = () => {
-  // Array para gerar conteúdo suficiente para forçar a rolagem vertical
-  const dummyContent = Array.from({ length: 40 }, (_, i) => i + 1);
-
+const HomePage: NextPage = () => {
   return (
-    // Envolve o conteúdo com o componente Layout
     <Layout>
       <h1 className="text-4xl font-extrabold text-indigo-700 mb-6 border-b border-indigo-500 pb-2">
         Board Principal dos Pedidos de Férias
@@ -21,24 +18,8 @@ const HomePage = () => {
         gerenciar seus pedidos de férias.
       </p>
 
-      {/* Conteúdo rolável para demonstração */}
-      <div className="space-y-4">
-        {dummyContent.map((item) => (
-          <div
-            key={item}
-            // Alterado de bg-gray-800 para bg-white e texto ajustado para fundo claro
-            className="p-4 bg-white rounded-lg shadow-lg hover:shadow-indigo-500/50 transition duration-300 border-l-4 border-indigo-600"
-          >
-            <h2 className="text-xl font-semibold text-gray-800">
-              Pedido de Férias #{item}
-            </h2>
-            <p className="mt-1 text-sm text-gray-500">
-              Descrição breve do pedido de férias {item}. O Header e a Sidebar
-              permanecerão fixos enquanto você move esta barra de rolagem.
-            </p>
-          </div>
-        ))}
-      </div>
+      {/* Componente que lista os pedidos de férias reais */}
+      <BookingListComponent />
     </Layout>
   );
 };

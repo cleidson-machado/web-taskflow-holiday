@@ -14,9 +14,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   // Dados de mock para o menu da Sidebar
   const navItems = [
     { name: "Home", icon: LayoutDashboard, href: "/home" },
-    { name: "FÉRIAS - Reservas", icon: ListChecks, href: "/bookings" },
-    { name: "FÉRIAS - Registradas", icon: ListChecks, href: "/vacations" },
-    { name: "ADMIN - Empregados", icon: ListChecks, href: "/employees" },
+    { name: "Meus Pedidos", icon: ListChecks, href: "/bookings" },
+    { name: "Lista Geral", icon: ListChecks, href: "/vacations" },
+    { name: "ADMIN - Module", icon: ListChecks, href: "/employees" },
     { name: "MEU Perfil", icon: User, href: "/profile" },
   ];
 

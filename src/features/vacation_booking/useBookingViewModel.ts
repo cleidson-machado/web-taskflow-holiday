@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import { BookingService } from "./bookingService";
 import { BookingModel } from "./bookingModel";
@@ -21,7 +23,7 @@ export function useBookingViewModel() {
     try {
       const response = await bookingService.getBookings();
       const bookingsData = BookingModel.fromDtoArray(response.content);
-      
+
       setBookings(bookingsData);
       setTotalItems(response.totalItems);
       setTotalPages(response.totalPages);
