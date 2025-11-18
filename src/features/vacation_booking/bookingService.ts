@@ -1,7 +1,9 @@
 import { PaginatedBookingsResponseDto } from "./types";
 
 export class BookingService {
-  private baseUrl = "http://localhost:8080/bookings";
+  private baseUrl = `${
+    process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"
+  }/bookings`;
 
   async getBookings(): Promise<PaginatedBookingsResponseDto> {
     try {

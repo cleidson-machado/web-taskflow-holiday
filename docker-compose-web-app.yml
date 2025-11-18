@@ -1,0 +1,70 @@
+version: "3.8"
+
+services:
+  # Next.js Web Application
+  web-taskflow-holiday:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: web-taskflow-holiday
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=http://your-backend-url:8080
+      - PORT=3000
+      - HOSTNAME=0.0.0.0
+    networks:
+      - taskflow-network
+    labels:
+      - "com.docker.compose.service=web-taskflow-holiday"
+      - "com.docker.compose.project=taskflow-holiday"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "--quiet",
+          "--tries=1",
+          "--spider",
+          "http://localhost:3000/home",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    depends_on:
+      - nginx
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: taskflow-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/sites-available:/etc/nginx/sites-available:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - ./nginx/logs:/var/log/nginx
+    networks:
+      - taskflow-network
+    labels:
+      - "com.docker.compose.service=nginx"
+      - "com.docker.compose.project=taskflow-holiday"
+    depends_on:
+      - web-taskflow-holiday
+
+networks:
+  taskflow-network:
+    driver: bridge
+    labels:
+      - "com.docker.compose.network=taskflow-network"
+      - "com.docker.compose.project=taskflow-holiday"
+
+volumes:
+  nginx_logs:
+    driver: local

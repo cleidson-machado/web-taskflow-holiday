@@ -1,0 +1,21 @@
+services:
+  # Next.js Web Application - Development Version
+  web-taskflow-holiday-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: web-taskflow-holiday-dev
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://host.docker.internal:8080
+      - PORT=3000
+      - HOSTNAME=0.0.0.0
+    networks:
+      - taskflow-dev-network
+
+networks:
+  taskflow-dev-network:
+    driver: bridge
